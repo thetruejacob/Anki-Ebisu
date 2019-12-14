@@ -1,0 +1,21 @@
+{
+    "hotkey": "Ctrl+M",
+    "ef_hotkey": "Ctrl+Shift+M",
+    "fg_hotkey": null,
+    "default_days_on_ask": 7,
+    "revlog_rescheduled": true,
+    "fuzz_days": true,
+    "bury_siblings": false,
+    "forget_siblings": false,
+    "reschedule_sibling": false,
+    "reschedule_siblings_on_again": true,
+    "sibling_boundary": 365,
+    "sibling_days_min": 7,
+    "sibling_days_max": 20,
+    "automatic_mode": false,
+    "browser": {
+        "replace_brower_reschedule": false,
+        "replace_brower_reposition": false,
+        "skip_new_card_types_on_reposition": false
+    }
+}
