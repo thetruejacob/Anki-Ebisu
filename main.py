@@ -6,9 +6,8 @@ from aqt.utils import tooltip
 import sys
 import os
 import sqlite3
-import ebisu
 from .memorizesrs import schedule
-from .ebisu import *
+from .ebisuAllInOne import *
 from datetime import datetime, timedelta
 from math import inf
 
@@ -32,7 +31,7 @@ def ResultsandTimes(cardID, initialModel = ebisu.defaultModel(0.25, 3)):
     
     
 def ivlAdjustFunc():
-    '''Just a basic function: Arthur, please change this.'''
+    '''Just a basic function: Arthur, please add code here to hook to showQuesiton or answerCard.'''
 
 
 

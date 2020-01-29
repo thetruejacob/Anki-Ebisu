@@ -1,3 +1,3 @@
 from . import YesOrNo
-from . import ebisu
+from . import ebisuAllInOne
 from .main import *
