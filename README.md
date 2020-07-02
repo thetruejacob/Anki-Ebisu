@@ -5,11 +5,14 @@ This Anki addon changes the underlying scheduling algorithm; replacing SM2 with 
 
 Warning: This change is not reversible and is incompatible with other addons.
 
-# How to install
-
-
 # How it Works
-https://fasiha.github.io/ebisu/#bernoulli-quizzes
+For a full description, check this link https://fasiha.github.io/ebisu/#bernoulli-quizzes.
+
+# Acknowledgements 
+A huge thanks to Fasih Ahmed for creating Ebisu!
+
+Many thanks also to Arthur Milchior for helping with the addon. The Anki backend is not at all easy to navigate. 
+
 
 
 
