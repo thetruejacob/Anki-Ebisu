@@ -32,14 +32,14 @@ def reprocess(card):
     ivlInSecond = ivlInHour * 3600
     nextReviewSecond = lastReviewSecond + ivlInSecond
 
-    showInfo(f"ivlInHour is {ivlInHour}, ivlInDay is {ivlInDay}, ivlInSecond is {ivlInSecond}")
+    print(f"ivlInHour is {ivlInHour}, ivlInDay is {ivlInDay}, ivlInSecond is {ivlInSecond}")
     card.reps = 0
     remainingIntervalInSecond = nextReviewSecond - currentSecond
     remainingIntervalInDay = round(remainingIntervalInSecond / (24 * 60 * 60))
 
     remainingSecondsBeforeCutoff = card.col.sched.dayCutoff - currentSecond
     secondsSinceLastReview = currentSecond - lastReviewSecond
-    showInfo(f"--------------\nCard {card.id} was last reviewed {fmtTimeSpan(secondsSinceLastReview)} ago. Its interval was {card.ivl}. Interval should be {fmtTimeSpan(ivlInSecond)}. I.e. in {fmtTimeSpan(remainingIntervalInSecond)}. ")
+    print(f"--------------\nCard {card.id} was last reviewed {fmtTimeSpan(secondsSinceLastReview)} ago. Its interval was {card.ivl}. Interval should be {fmtTimeSpan(ivlInSecond)}. I.e. in {fmtTimeSpan(remainingIntervalInSecond)}. ")
 
     if nextReviewSecond <= currentSecond:
         # card is already due
@@ -47,7 +47,7 @@ def reprocess(card):
         card.type = CARD_REV
         card.ivl = ivlInHour
         card.due = self.today # TODO: find real day
-        showInfo(f"Setting its due date to today since already due.")
+        print(f"Setting its due date to today since already due.")
         return
 
     if ivlInHour >= 48:
@@ -56,7 +56,7 @@ def reprocess(card):
         card.type = CARD_DUE
         card.due = card.col.sched.today + remainingIntervalInDay
         card.ivl = ivlInDay
-        showInfo(f"Setting its due date to the day {card.due}, in {remainingIntervalInDay} days.")
+        print(f"Setting its due date to the day {card.due}, in {remainingIntervalInDay} days.")
         return
 
     # at most 2 day. Stay in learning mode.
@@ -64,7 +64,7 @@ def reprocess(card):
     card.type = CARD_LRN
     card.due = round(nextReviewSecond)
     t = time.localtime(nextReviewSecond)
-    showInfo(f"Setting its due date to {card.due}, i.e. {time.strftime('%y.%m.%d %H:%M:%S', t)}.")
+    print(f"Setting its due date to {card.due}, i.e. {time.strftime('%y.%m.%d %H:%M:%S', t)}.")
 
 
 def flush(self):
@@ -85,7 +85,7 @@ Card.flushSched = flushSched
 def ResultsandTimes(cardID, initialModel=ebisuAllInOne.defaultModel(24, 3)):
     ''' 
     Takes as input the cardID and initial guess of the model, and returns the next interval in hours from the last interval
-    The default model assumes a beta distribution with alpha = beta = 3, half life = 1 day
+    The default model assumes a beta distribution with alpha = beta = 3, half life = 24 hours.
     '''
 
     # pull reviewresults from database
