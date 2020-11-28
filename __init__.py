@@ -117,7 +117,7 @@ def ResultsandTimes(cardID, initialModel=ebisuAllInOne.defaultModel(24, 3)):
 
     # modelToPercentileDecay estimates how long (in seconds) it will take for a model to decay to a given percentile 
     # Here, the percentile is 0.5, which is the half-life of the memory.
-    showInfo(f"model to percentile decay is {ebisuAllInOne.modelToPercentileDecay(model)}")
+    print(f"model to percentile decay is {ebisuAllInOne.modelToPercentileDecay(model)}")
     return ebisuAllInOne.modelToPercentileDecay(model)
 
 def ebisuAll():
