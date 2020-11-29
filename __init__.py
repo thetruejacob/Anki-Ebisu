@@ -43,7 +43,7 @@ def reprocess(card):
     if nextReviewSecond <= currentSecond:
         # card is already due
         card.queue = QUEUE_REV
-        card.type = CARD_REV
+        # card.type = CARD_REV
         card.type = CARD_LRN 
         card.ivl = ivlInHour
         card.due = card.col.sched.today # TODO: find real day
@@ -103,7 +103,7 @@ def ResultsandTimes(cardID, initialModel=ebisuAllInOne.defaultModel(24, 3)):
 
     previousTime, model = reviewTimes[0], initialModel
 
-    showInfo(f"Review Results are {reviewResults},\n Review Times are {reviewTimes},\n previousTime is {previousTime},\n model is {model}")
+    # showInfo(f"Review Results are {reviewResults},\n Review Times are {reviewTimes},\n previousTime is {previousTime},\n model is {model}")
 
 
     # Here, we start updating the recall successively based on the entire review history of the card. 
@@ -119,7 +119,7 @@ def ResultsandTimes(cardID, initialModel=ebisuAllInOne.defaultModel(24, 3)):
 
     # modelToPercentileDecay estimates how long (in hours) it will take for a model to decay to a given percentile 
     # Here, the percentile is 0.5, which is the half-life of the memory.
-    showInfo(f"model to percentile decay is {ebisuAllInOne.modelToPercentileDecay(model)}")
+    # showInfo(f"model to percentile decay is {ebisuAllInOne.modelToPercentileDecay(model)}")
     return ebisuAllInOne.modelToPercentileDecay(model)
 
 def ebisuAll():
