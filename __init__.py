@@ -42,27 +42,26 @@ def reprocess(card):
 
     if nextReviewSecond <= currentSecond:
         # card is already due
-        card.queue = QUEUE_REV
-        # card.type = CARD_REV
-        card.type = CARD_LRN 
-        card.ivl = -10
-        showInfo(f"This card is overdue. The next interval will be {card.ivl}")
-        card.due = card.col.sched.today # TODO: find real day
+        card.queue = QUEUE_TYPE_REV
+        card.type = CARD_TYPE_REV 
+        card.ivl = -10 # set to something else?
+        # showInfo(f"This card is overdue. The next interval will be {card.ivl}")
+        card.due = card.col.sched.today # TODO: find real day  #maybe set to just today?
         # showInfo(f"Setting its due date to today since already due.")
         return
 
     if ivlInHour >= 48:
         # more than 2 day. We can average and set to review
-        card.queue = QUEUE_REV
-        card.type = CARD_DUE
+        card.queue = QUEUE_TYPE_REV
+        card.type = CARD_TYPE_REV
         card.due = card.col.sched.today + remainingIntervalInDay
         card.ivl = ivlInDay
         # showInfo(f"Setting its due date to the day {card.due}, in {remainingIntervalInDay} days.")
         return
 
     # at most 2 day. Stay in learning mode.
-    card.queue = QUEUE_LRN
-    card.type = CARD_LRN
+    card.queue = QUEUE_TYPE_LRN
+    card.type = CARD_TYPE_LRN
     card.due = round(nextReviewSecond)
     t = time.localtime(nextReviewSecond)
     # showInfo(f"Setting its due date to {card.due}, i.e. {time.strftime('%y.%m.%d %H:%M:%S', t)}.")
@@ -70,14 +69,14 @@ def reprocess(card):
 
 def flush(self):
     print("our flush")
-    if self.queue in {QUEUE_LRN, QUEUE_DAY_LRN, QUEUE_REV}:
+    if self.queue in {QUEUE_TYPE_LRN, QUEUE_TYPE_DAY_LEARN_RELEARN, QUEUE_TYPE_REV}:
         # Only consider review and learning
         reprocess(self)
     oldFlush(self)
 Card.flush = flush
 def flushSched(self):
     print("our flush")
-    if self.queue in {QUEUE_LRN, QUEUE_DAY_LRN, QUEUE_REV}:
+    if self.queue in {QUEUE_TYPE_LRN, QUEUE_TYPE_DAY_LEARN_RELEARN, QUEUE_TYPE_REV}:
         # Only consider review and learning
         reprocess(self)
     oldFlushSched(self)
