@@ -31,7 +31,7 @@ def reprocess(card):
     ivlInSecond = ivlInHour * 3600
     nextReviewSecond = lastReviewSecond + ivlInSecond
 
-    showInfo(f"ivlInHour is {ivlInHour}, ivlInDay is {ivlInDay}, ivlInSecond is {ivlInSecond}")
+    # showInfo(f"ivlInHour is {ivlInHour}, ivlInDay is {ivlInDay}, ivlInSecond is {ivlInSecond}")
     card.reps = 0
     remainingIntervalInSecond = nextReviewSecond - currentSecond
     remainingIntervalInDay = round(remainingIntervalInSecond / (24 * 60 * 60))
@@ -45,9 +45,10 @@ def reprocess(card):
         card.queue = QUEUE_REV
         # card.type = CARD_REV
         card.type = CARD_LRN 
-        card.ivl = ivlInHour
+        card.ivl = -10
+        showInfo(f"This card is overdue. The next interval will be {card.ivl}")
         card.due = card.col.sched.today # TODO: find real day
-        showInfo(f"Setting its due date to today since already due.")
+        # showInfo(f"Setting its due date to today since already due.")
         return
 
     if ivlInHour >= 48:
@@ -56,7 +57,7 @@ def reprocess(card):
         card.type = CARD_DUE
         card.due = card.col.sched.today + remainingIntervalInDay
         card.ivl = ivlInDay
-        showInfo(f"Setting its due date to the day {card.due}, in {remainingIntervalInDay} days.")
+        # showInfo(f"Setting its due date to the day {card.due}, in {remainingIntervalInDay} days.")
         return
 
     # at most 2 day. Stay in learning mode.
@@ -64,7 +65,7 @@ def reprocess(card):
     card.type = CARD_LRN
     card.due = round(nextReviewSecond)
     t = time.localtime(nextReviewSecond)
-    showInfo(f"Setting its due date to {card.due}, i.e. {time.strftime('%y.%m.%d %H:%M:%S', t)}.")
+    # showInfo(f"Setting its due date to {card.due}, i.e. {time.strftime('%y.%m.%d %H:%M:%S', t)}.")
 
 
 def flush(self):
