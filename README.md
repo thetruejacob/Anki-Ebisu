@@ -8,7 +8,7 @@ Addons that change the intervals, such as: Auto Ease Factor, auto lapse new inte
 
 
 # How it Works
-For a full description of the statistical model behind Ebisu, check out [Fasih Ahmed's explanation](https://fasiha.github.io/ebisu/#bernoulli-quizzes.)
+For a full description of the statistical model behind Ebisu, check out [Fasih Ahmed's explanation](https://fasiha.github.io/ebisu/#bernoulli-quizzes).
 
 # How to Install
 In your terminal, navigate to the folder where your addons are kept. Then, clone this repo:
