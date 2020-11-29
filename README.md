@@ -11,12 +11,11 @@ Addons that change the intervals, such as: Auto Ease Factor, auto lapse new inte
 For a full description, check this link https://fasiha.github.io/ebisu/#bernoulli-quizzes.
 
 # How to Install
-In your terminal, navigate to the folder where your addons are kept
-Then, clone this repo
+In your terminal, navigate to the folder where your addons are kept. Then, clone this repo:
 ```
 git clone https://github.com/thetruejacob/Anki-Ebisu
 ```
-
+Open up Anki and check out your addons. It should be there as Anki-Ebisu
 
 # Acknowledgements 
 A huge thanks to Fasih Ahmed for creating Ebisu!
