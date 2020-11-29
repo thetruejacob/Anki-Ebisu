@@ -7,7 +7,6 @@ from aqt.qt import *
 from aqt import mw
 
 from .consts import *
-from .memorizesrs import schedule
 from .ebisuAllInOne import *
 from datetime import datetime
 import time
