@@ -31,7 +31,7 @@ def reprocess(card):
     ivlInSecond = ivlInHour * 3600
     nextReviewSecond = lastReviewSecond + ivlInSecond
 
-    print(f"ivlInHour is {ivlInHour}, ivlInDay is {ivlInDay}, ivlInSecond is {ivlInSecond}")
+    showInfo(f"ivlInHour is {ivlInHour}, ivlInDay is {ivlInDay}, ivlInSecond is {ivlInSecond}")
     card.reps = 0
     remainingIntervalInSecond = nextReviewSecond - currentSecond
     remainingIntervalInDay = round(remainingIntervalInSecond / (24 * 60 * 60))
@@ -43,11 +43,11 @@ def reprocess(card):
     if nextReviewSecond <= currentSecond:
         # card is already due
         card.queue = QUEUE_REV
-        # card.type = CARD_REV
-        card.type = CARD_LRN # change to this for now
+        card.type = CARD_REV
+        card.type = CARD_LRN 
         card.ivl = ivlInHour
-        card.due = self.today # TODO: find real day
-        print(f"Setting its due date to today since already due.")
+        card.due = card.col.sched.today # TODO: find real day
+        showInfo(f"Setting its due date to today since already due.")
         return
 
     if ivlInHour >= 48:
@@ -56,7 +56,7 @@ def reprocess(card):
         card.type = CARD_DUE
         card.due = card.col.sched.today + remainingIntervalInDay
         card.ivl = ivlInDay
-        print(f"Setting its due date to the day {card.due}, in {remainingIntervalInDay} days.")
+        showInfo(f"Setting its due date to the day {card.due}, in {remainingIntervalInDay} days.")
         return
 
     # at most 2 day. Stay in learning mode.
@@ -64,7 +64,7 @@ def reprocess(card):
     card.type = CARD_LRN
     card.due = round(nextReviewSecond)
     t = time.localtime(nextReviewSecond)
-    print(f"Setting its due date to {card.due}, i.e. {time.strftime('%y.%m.%d %H:%M:%S', t)}.")
+    showInfo(f"Setting its due date to {card.due}, i.e. {time.strftime('%y.%m.%d %H:%M:%S', t)}.")
 
 
 def flush(self):
@@ -103,21 +103,23 @@ def ResultsandTimes(cardID, initialModel=ebisuAllInOne.defaultModel(24, 3)):
 
     previousTime, model = reviewTimes[0], initialModel
 
-    print(f"Review Results are {reviewResults},\n Review Times are {reviewTimes},\n previousTime is {previousTime},\n model is {model}")
+    showInfo(f"Review Results are {reviewResults},\n Review Times are {reviewTimes},\n previousTime is {previousTime},\n model is {model}")
+
 
     # Here, we start updating the recall successively based on the entire review history of the card. 
+    for i in range(1, len(reviewTimes)):
+        # showInfo(f"Review {i} at {reviewTimes[i]}")
+        timedifference_hours = (reviewTimes[i] - reviewTimes[i-1]).total_seconds()/3600
+        
+        # showInfo(f"Elapsed {round(timedifference_hours,2)} hours\nPredicted {predictRecall(model, timedifference_hours, exact = True)}\nResult: {reviewResults[i]} \n")
+        
+        model = a, b, t = ebisuAllInOne.updateRecall(prior = model, result = reviewResults[i], tnow = timedifference_hours)
+        # showInfo(f"Updated model: {round(a,2), round(b,2), round(t,2)} \nThe estimated half-life is {round(modelToPercentileDecay(model), 3)}")
 
-    for (reviewTime, result) in zip(reviewTimes[1:], reviewResults[1:]):
 
-        # recursively update the model with the review result, and elapsed time (reviewTime - previousTime is a timeDelta object) in days
-        model = ebisuAllInOne.updateRecall(model, result, (reviewTime - previousTime).total_seconds() / 86400)
-        previousTime = reviewTime
-
-
-
-    # modelToPercentileDecay estimates how long (in seconds) it will take for a model to decay to a given percentile 
+    # modelToPercentileDecay estimates how long (in hours) it will take for a model to decay to a given percentile 
     # Here, the percentile is 0.5, which is the half-life of the memory.
-    print(f"model to percentile decay is {ebisuAllInOne.modelToPercentileDecay(model)}")
+    showInfo(f"model to percentile decay is {ebisuAllInOne.modelToPercentileDecay(model)}")
     return ebisuAllInOne.modelToPercentileDecay(model)
 
 def ebisuAll():
