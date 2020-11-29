@@ -43,7 +43,8 @@ def reprocess(card):
     if nextReviewSecond <= currentSecond:
         # card is already due
         card.queue = QUEUE_REV
-        card.type = CARD_REV
+        # card.type = CARD_REV
+        card.type = CARD_LRN # change to this for now
         card.ivl = ivlInHour
         card.due = self.today # TODO: find real day
         print(f"Setting its due date to today since already due.")
