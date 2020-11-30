@@ -123,7 +123,7 @@ def ResultsandTimes(cardID, initialModel=ebisuAllInOne.defaultModel(24, 3)):
     return ebisuAllInOne.modelToPercentileDecay(model)
 
 def ebisuAll():
-    for cid in mw.col.db.list(f"SELECT id FROM cards where queue in ({QUEUE_LRN}, {QUEUE_DAY_LRN}, {QUEUE_REV})"):
+    for cid in mw.col.db.list(f"SELECT id FROM cards where queue in ({QUEUE_TYPE_LRN}, {QUEUE_TYPE_DAY_LEARN_RELEARN}, {QUEUE_TYPE_REV})"):
         card = mw.col.getCard(cid)
         card.flush()
 
