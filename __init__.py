@@ -44,8 +44,8 @@ def reprocess(card):
         # card is already due
         card.queue = QUEUE_TYPE_REV
         card.type = CARD_TYPE_REV 
-        card.ivl = -10 # set to something else? Originally card.ivl = ivlInHour
-        # showInfo(f"This card is overdue. The next interval will be {card.ivl}")
+        showInfo(f"This card is overdue. The next interval will be {card.ivl}")
+        card.ivl = self.today # set to something else? Originally card.ivl = ivlInHour
         card.due = card.col.sched.today # TODO: find real day  # Originally card.due = self.today
         # showInfo(f"Setting its due date to today since already due.")
         return
