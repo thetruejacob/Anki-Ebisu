@@ -82,7 +82,7 @@ def flushSched(self):
     oldFlushSched(self)
 Card.flushSched = flushSched
 
-def ResultsandTimes(cardID, initialModel=ebisuAllInOne.defaultModel(24, 2)):
+def ResultsandTimes(cardID, initialModel=ebisuAllInOne.defaultModel(24, 1.5)):
     ''' 
     Takes as input the cardID and initial guess of the model, and returns the next interval in hours from the last interval
     The default model assumes a beta distribution with alpha = beta = 3, half life = 24 hours.
